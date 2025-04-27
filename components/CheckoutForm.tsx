@@ -2,6 +2,9 @@
 
 import { useState } from "react";
 import { motion } from "motion/react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 
 export default function CheckoutForm() {
   const [loading, setLoading] = useState(false);
@@ -11,9 +14,9 @@ export default function CheckoutForm() {
     setLoading(true);
 
     setTimeout(() => {
-      alert("Paiement fictif réussi 🎉");
+      alert("Paiement réussi !");
       setLoading(false);
-    }, 2000); // simule un paiement
+    }, 2000);
   };
 
   return (
@@ -28,46 +31,31 @@ export default function CheckoutForm() {
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">Nom</label>
-          <input
-            type="text"
-            required
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:border-blue-400 focus:outline-none"
-          />
+        <div className="space-y-2">
+          <Label htmlFor="name">Nom</Label>
+          <Input id="name" type="text" required placeholder="Votre nom" />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
-          <input
-            type="email"
-            required
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:border-blue-400 focus:outline-none"
-          />
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" required placeholder="Votre email" />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Numéro de carte (fictif)
-          </label>
-          <input
+        <div className="space-y-2">
+          <Label htmlFor="card">Numéro de carte</Label>
+          <Input
+            id="card"
             type="text"
             required
             placeholder="4242 4242 4242 4242"
-            className="mt-1 w-full rounded-lg border border-gray-300 p-3 focus:border-blue-400 focus:outline-none"
           />
         </div>
 
-        <motion.button
-          whileTap={{ scale: 0.95 }}
-          type="submit"
-          disabled={loading}
-          className="mt-4 w-full rounded-xl bg-blue-500 px-4 py-3 text-white transition hover:bg-blue-600 disabled:opacity-50"
-        >
-          {loading ? "Traitement..." : "Payer"}
-        </motion.button>
+        <motion.div whileTap={{ scale: 0.95 }}>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Traitement..." : "Payer"}
+          </Button>
+        </motion.div>
       </form>
     </motion.div>
   );
