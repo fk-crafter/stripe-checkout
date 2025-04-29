@@ -19,7 +19,7 @@ export default function CheckoutForm() {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: "client@example.com" }), // fictif
+        body: JSON.stringify({ email: "client@example.com" }),
       });
 
       const data = await res.json();
