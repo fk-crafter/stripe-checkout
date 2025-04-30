@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
             product_data: {
               name: "Abonnement SaaS",
             },
-            unit_amount: 2000,
+            unit_amount: 100,
           },
           quantity: 1,
         },

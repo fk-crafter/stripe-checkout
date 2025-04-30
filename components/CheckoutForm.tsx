@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { loadStripe } from "@stripe/stripe-js";
 
 const stripePromise = loadStripe(
@@ -11,15 +12,18 @@ const stripePromise = loadStripe(
 
 export default function CheckoutForm() {
   const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleSubmit = async () => {
+    if (!email) return alert("Merci de renseigner un email.");
+
     setLoading(true);
 
     try {
       const res = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: "client@example.com" }),
+        body: JSON.stringify({ email }),
       });
 
       const data = await res.json();
@@ -45,6 +49,20 @@ export default function CheckoutForm() {
         Votre commande
       </h1>
 
+      <div className="mb-4">
+        <label htmlFor="email" className="block mb-1 font-medium text-gray-700">
+          Email
+        </label>
+        <Input
+          type="email"
+          id="email"
+          placeholder="votre@email.com"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </div>
+
       <ul className="mb-6 space-y-3 text-gray-700">
         <li className="flex justify-between">
           <span>Abonnement SaaS (1 mois)</span>
@@ -61,7 +79,11 @@ export default function CheckoutForm() {
       </ul>
 
       <motion.div whileTap={{ scale: 0.95 }}>
-        <Button onClick={handleSubmit} className="w-full" disabled={loading}>
+        <Button
+          onClick={handleSubmit}
+          className="w-full cursor-pointer"
+          disabled={loading}
+        >
           {loading ? "Redirection..." : "Passer la commande"}
         </Button>
       </motion.div>
